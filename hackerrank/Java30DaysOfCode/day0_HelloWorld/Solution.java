@@ -1,10 +1,7 @@
-package hackerrank.Java30DaysOfCode.day0;
+package hackerrank.Java30DaysOfCode.day0_HelloWorld;
 
-import java.io.*;
 import java.util.*;
-import java.text.*;
-import java.math.*;
-import java.util.regex.*;
+
 public class Solution {
     public static void main(String[] args) {
         // Create a Scanner object to read input from stdin.

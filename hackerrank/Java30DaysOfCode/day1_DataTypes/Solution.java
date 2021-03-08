@@ -1,10 +1,6 @@
-package hackerrank.Java30DaysOfCode.day1;
+package hackerrank.Java30DaysOfCode.day1_DataTypes;
 
-import java.io.*;
 import java.util.*;
-import java.text.*;
-import java.math.*;
-import java.util.regex.*;
 
 public class Solution {
 
