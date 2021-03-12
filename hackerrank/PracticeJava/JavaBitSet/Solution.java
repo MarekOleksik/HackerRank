@@ -5,7 +5,6 @@ import java.util.BitSet;
 import java.util.List;
 import java.util.Scanner;
 
-//TODO
 public class Solution {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -17,23 +16,18 @@ public class Solution {
         BitSet bitSet2 = new BitSet(bitsetLength);
         List<String> results = new ArrayList<>();
 
-        for (int i = 0; i < bitsetLength; i++) {
-            bitSet1.set(i, false);
-            bitSet2.set(i, false);
-        }
-
-        System.out.println(bitSet2);
-
         for (int i = 0; i < numberOfOperations; i++) {
             String[] line = scanner.nextLine().split(" ");
             int set1 = Integer.parseInt(line[1]);
             int set2 = Integer.parseInt(line[2]);
-            String result = bitSet1.toString() + " " + bitSet2.toString();
 
             switch (line[0]) {
                 case "AND": {
-                    bitSet2.and(bitSet1);
-
+                    if (set1 == 1) {
+                        bitSet1.and(bitSet2);
+                    } else if (set1 == 2) {
+                        bitSet2.and(bitSet1);
+                    }
                 }
                 break;
                 case "SET": {
@@ -42,14 +36,38 @@ public class Solution {
                     } else if (set1 == 2) {
                         bitSet2.set(set2);
                     }
-                    results.add(result);
                 }
+                break;
+                case "FLIP": {
+                    if (set1 == 1) {
+                        bitSet1.flip(set2);
+                    } else if (set1 == 2) {
+                        bitSet2.flip(set2);
+                    }
+                }
+                break;
+                case "OR": {
+                    if (set1 == 1) {
+                        bitSet1.or(bitSet2);
+                    } else if (set1 == 2) {
+                        bitSet2.or(bitSet1);
+                    }
+                }
+                break;
+                case "XOR": {
+                    if (set1 == 1) {
+                        bitSet1.xor(bitSet2);
+                    } else if (set1 == 2) {
+                        bitSet2.xor(bitSet1);
+                    }
+                }
+                break;
             }
+            results.add(bitSet1.cardinality() + " " + bitSet2.cardinality());
         }
 
         for (String res : results) {
             System.out.println(res);
         }
-
     }
 }
