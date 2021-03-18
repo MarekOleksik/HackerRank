@@ -1,4 +1,4 @@
-package hackerrank.PracticeJava.CompareTheTriplets;
+package hackerrank.ProblemSolvingBasic.CompareTheTriplets;
 
 import java.io.*;
 import java.util.*;

@@ -1,4 +1,4 @@
-package hackerrank.PracticeJava.SimpleArraySum;
+package hackerrank.ProblemSolvingBasic.SimpleArraySum;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

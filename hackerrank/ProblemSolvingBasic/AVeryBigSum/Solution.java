@@ -1,4 +1,4 @@
-package hackerrank.PracticeJava.AVeryBigSum;
+package hackerrank.ProblemSolvingBasic.AVeryBigSum;
 
 import java.io.*;
 import java.util.*;
