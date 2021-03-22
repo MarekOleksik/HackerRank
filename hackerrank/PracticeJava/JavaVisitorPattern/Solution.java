@@ -1,6 +1,8 @@
 package hackerrank.PracticeJava.JavaVisitorPattern;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 enum Color {
@@ -66,18 +68,20 @@ class TreeLeaf extends Tree {
     }
 }
 
-abstract class TreeVis
-{
+abstract class TreeVis {
     public abstract int getResult();
+
     public abstract void visitNode(TreeNode node);
+
     public abstract void visitLeaf(TreeLeaf leaf);
 
 }
 
 class SumInLeavesVisitor extends TreeVis {
+    private int sumInLeaves = 0;
+
     public int getResult() {
-        //implement this
-        return 0;
+        return sumInLeaves;
     }
 
     public void visitNode(TreeNode node) {
@@ -85,37 +89,44 @@ class SumInLeavesVisitor extends TreeVis {
     }
 
     public void visitLeaf(TreeLeaf leaf) {
-        //implement this
+        sumInLeaves += leaf.getValue();
     }
 }
 
 class ProductOfRedNodesVisitor extends TreeVis {
+    long productOfRedNodes = 1L;
+
     public int getResult() {
-        //implement this
-        return 1;
+        return (int) (productOfRedNodes);
     }
 
     public void visitNode(TreeNode node) {
-        //implement this
+        if (node.getColor() == Color.RED)
+            productOfRedNodes = (productOfRedNodes * node.getValue()) % (1000000007);
     }
 
     public void visitLeaf(TreeLeaf leaf) {
-        //implement this
+        if (leaf.getColor() == Color.RED)
+            productOfRedNodes = (productOfRedNodes * leaf.getValue()) % (1000000007);
     }
 }
 
 class FancyVisitor extends TreeVis {
+    int sumOfValuesNonLeafAtEvenDepth = 0;
+    int sumOfValuesGreenLeaf = 0;
+
     public int getResult() {
-        //implement this
-        return 0;
+        return Math.abs(sumOfValuesGreenLeaf - sumOfValuesNonLeafAtEvenDepth);
     }
 
     public void visitNode(TreeNode node) {
-        //implement this
+        if (node.getDepth() % 2 != 0) return;
+        sumOfValuesNonLeafAtEvenDepth += node.getValue();
     }
 
     public void visitLeaf(TreeLeaf leaf) {
-        //implement this
+        if (leaf.getColor() != Color.GREEN) return;
+        sumOfValuesGreenLeaf += leaf.getValue();
     }
 }
 
@@ -134,8 +145,16 @@ public class Solution {
         for (int i = 0; i < n; i++) {
             c[i] = scanner.nextInt();
         }
+        int[] edge = new int[2];
+        List<int[]> edges = new LinkedList<>();
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < 2; j++) {
+                edge[i] = scanner.nextInt();
+            }
+            edges.add(edge);
+        }
 
-    return tree;
+        return tree;
     }
 
 
