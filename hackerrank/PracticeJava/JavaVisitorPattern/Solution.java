@@ -1,9 +1,6 @@
 package hackerrank.PracticeJava.JavaVisitorPattern;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 enum Color {
     RED, GREEN
@@ -131,30 +128,77 @@ class FancyVisitor extends TreeVis {
 }
 
 public class Solution {
+    private static Map<Integer, Set<Integer>> nodesMap = new HashMap<>();
+    private static int[] x;
+    private static Color[] c;
 
     public static Tree solve() {
-        Tree tree = null;
+        Tree tree;
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
-        int[] x = new int[n];
-        int[] c = new int[n];
+        x = new int[n];
+        c = new Color[n];
 
         for (int i = 0; i < n; i++) {
             x[i] = scanner.nextInt();
         }
         for (int i = 0; i < n; i++) {
-            c[i] = scanner.nextInt();
+            c[i] = (scanner.nextInt() == 0) ? Color.RED : Color.GREEN;
         }
-        int[] edge = new int[2];
-        List<int[]> edges = new LinkedList<>();
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < 2; j++) {
-                edge[i] = scanner.nextInt();
+
+
+        if (n == 1) {
+            tree = new TreeLeaf(x[0], c[0], 0);
+        } else {
+            for (int index = 0; index < (n - 1); index++) {
+                int u = scanner.nextInt();
+                int v = scanner.nextInt();
+                Set<Integer> uEdges = nodesMap.get(u);
+                if (uEdges == null) {
+                    uEdges = new HashSet<>();
+                }
+                uEdges.add(v);
+                nodesMap.put(u, uEdges);
+                Set<Integer> vEdges = nodesMap.get(v);
+                if (vEdges == null) {
+                    vEdges = new HashSet<>();
+                }
+                vEdges.add(u);
+                nodesMap.put(v, vEdges);
             }
-            edges.add(edge);
+
+            tree = new TreeNode(x[0], c[0], 0);
+            Set<Integer> rootEdges = nodesMap.get(1);
+            Iterator<Integer> rootIterator = rootEdges.iterator();
+            while (rootIterator.hasNext()) {
+                Integer nodeIdentifier = rootIterator.next();
+                nodesMap.get(nodeIdentifier).remove(1);
+                createEdge(tree, nodeIdentifier);
+            }
         }
 
         return tree;
+    }
+
+    private static void createEdge(Tree tree, Integer nodeIdentifier) {
+        Set<Integer> nodeEdges = nodesMap.get(nodeIdentifier);
+        boolean hasChild = false;
+        if (nodeEdges != null && !nodeEdges.isEmpty())
+            hasChild = true;
+
+        if (hasChild) {
+            TreeNode node = new TreeNode(x[nodeIdentifier - 1], c[nodeIdentifier - 1], tree.getDepth() + 1);
+            ((TreeNode) tree).addChild(node);
+            Iterator<Integer> nodeIterator = nodeEdges.iterator();
+            while (nodeIterator.hasNext()) {
+                Integer neighborNodeIdentifier = nodeIterator.next();
+                nodesMap.get(neighborNodeIdentifier).remove(nodeIdentifier);
+                createEdge(node, neighborNodeIdentifier);
+            }
+        } else {
+            TreeLeaf leaf = new TreeLeaf(x[nodeIdentifier - 1], c[nodeIdentifier - 1], tree.getDepth() + 1);
+            ((TreeNode) tree).addChild(leaf);
+        }
     }
 
 
