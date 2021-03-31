@@ -1,7 +1,6 @@
 package hackerrank.Java30DaysOfCode.Day24_MoreLinkedLists;
 
-import java.io.*;
-import java.util.*;
+import java.util.Scanner;
 class Node{
     int data;
     Node next;
@@ -15,8 +14,20 @@ class Solution
 {
 
     public static Node removeDuplicates(Node head) {
-        //Write your code here
+        if (head == null) {
+            return head;
+        }
+        Node temp = head;
 
+        while (temp.next != null) {
+            if (temp.data == temp.next.data) {
+                temp.next = temp.next.next;
+            } else {
+                temp = temp.next;
+            }
+        }
+
+        return head;
     }
 
     public static  Node insert(Node head,int data)
