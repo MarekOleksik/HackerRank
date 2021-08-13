@@ -1,4 +1,4 @@
-package hackerrank.InterviewPreparationKit.TwoDArrayDS;
+package hackerrank.InterviewPreparationKit.Arrays.TwoDArrayDS;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

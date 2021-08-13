@@ -1,3 +1,7 @@
+.idea/
+HackerRank.iml
+target/
+
 # Compiled class file
 *.class
 
